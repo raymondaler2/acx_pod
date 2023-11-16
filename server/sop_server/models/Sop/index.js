@@ -14,8 +14,55 @@ const sopSchema = mongoose.Schema(
       type: String,
       required: [true, "Please enter an SOP Description"],
     },
-    // ! add schema for users
-    // ! add schema for comments
+    user_id: {
+      type: String,
+      required: [true, "Please enter user_id"],
+    },
+    comments: {
+      type: [
+        {
+          content: {
+            type: String,
+            required: [true, "Please enter comment content"],
+          },
+          user_id: {
+            type: String,
+            required: [true, "Please enter user_id"],
+          },
+          time: {
+            type: Date,
+            default: Date.now,
+          },
+          likes: {
+            type: [String],
+            default: [],
+          },
+          replies: {
+            type: [
+              {
+                content: {
+                  type: String,
+                  required: [true, "Please enter reply content"],
+                },
+                user_id: {
+                  type: String,
+                  required: [true, "Please enter user_id for reply"],
+                },
+                likes: {
+                  type: [String],
+                  default: [],
+                },
+                time: {
+                  type: Date,
+                  default: Date.now,
+                },
+              },
+            ],
+            default: [],
+          },
+        },
+      ],
+    },
     milestones: {
       type: [
         {

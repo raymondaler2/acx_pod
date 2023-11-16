@@ -92,8 +92,6 @@ const loginUser = asyncHandler(async (req, res) => {
       res.status(200).json({
         token,
         _id: user._id,
-        username: user.username,
-        email: user.email,
       });
     } else {
       res.status(401);
