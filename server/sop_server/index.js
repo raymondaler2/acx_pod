@@ -1,0 +1,47 @@
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const sopRoute = require("./view/routes/Sop");
+const errorMiddleware = require("./middleware/Error");
+const cors = require("cors");
+
+const app = express();
+
+const PORT = process.env.PORT || 3000;
+const MONGO_URL = process.env.MONGO_URL;
+
+app.use(cors());
+app.use(express.json());
+
+// * Routes
+app.get("/", (req, res) => {
+  res.send("API RESPONSE");
+});
+
+app.use("/api/sop", sopRoute);
+
+app.use(errorMiddleware);
+
+/* 
+  ADD CORS OPTIONS FOR SECUITY ON DEPLOYMENT AND ADD TO .ENV
+  const corsOptions = {
+    origin: ['http://example.com','http://192.168.1.1:6127'],
+    optionsSuccessStatus: 200
+  }
+  app.use(cors(corsOptions));
+
+*/
+
+mongoose.set("strictQuery", false);
+
+mongoose
+  .connect(MONGO_URL)
+  .then(() => {
+    console.log("Connected to knowledgebaseDB");
+    app.listen(PORT, () => {
+      console.log(`Server running  on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log("knowledgebaseDB Error:", error);
+  });
