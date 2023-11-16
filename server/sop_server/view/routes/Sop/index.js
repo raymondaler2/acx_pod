@@ -1,5 +1,6 @@
+const AuthenticateToken = require("./../../../middleware/AuthenticateToken/index.jsx");
 const express = require("express");
-const Sop = require("../../../models/Sop");
+
 const {
   getAllSop,
   getSopById,
@@ -11,10 +12,10 @@ const {
 const router = express.Router();
 
 // * SOP calls
-router.get("/", getAllSop);
-router.get("/:id", getSopById);
-router.post("/", addSop);
-router.put("/:id", updateSop);
-router.delete("/:id", deleteSop);
+router.get("/", AuthenticateToken, getAllSop);
+router.get("/:id", AuthenticateToken, getSopById);
+router.post("/", AuthenticateToken, addSop);
+router.put("/:id", AuthenticateToken, updateSop);
+router.delete("/:id", AuthenticateToken, deleteSop);
 
 module.exports = router;
