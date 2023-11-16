@@ -83,6 +83,7 @@ const loginUser = asyncHandler(async (req, res) => {
         {
           userId: user._id,
           email: user.email,
+          username: user.username,
         },
         secretKey,
         { expiresIn: "720h" }
@@ -91,7 +92,7 @@ const loginUser = asyncHandler(async (req, res) => {
       res.status(200).json({
         token,
         _id: user._id,
-        name: user.name,
+        username: user.username,
         email: user.email,
       });
     } else {

@@ -1,21 +1,21 @@
-const AuthenticateToken = async (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+const jwt = require("jsonwebtoken");
+
+const AuthenticateToken = (req, res, next) => {
+  const token = req.headers.authorization;
 
   if (!token) {
-    res.status(401);
-    throw new Error("Token not provided");
+    return res.status(401).json({ message: "Authentication token is missing" });
   }
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: "Invalid token" });
+    }
+
+    req.user = user;
+
     next();
-  } catch (error) {
-    console.log("🚨⚠️❗🚩", error);
-    res.status(403);  
-    throw new Error("Invalid token");
-  }
+  });
 };
 
 module.exports = AuthenticateToken;

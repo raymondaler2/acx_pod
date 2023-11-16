@@ -12,17 +12,11 @@ const {
 
 const router = express.Router();
 
-// * User calls
-router.get("/", getAllUsers);
-router.get("/:id", getUserById);
-router.post("/", addUser);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
-
-// * Login route
+router.get("/", AuthenticateToken, getAllUsers);
+router.get("/:id", AuthenticateToken, getUserById);
+router.post("/", AuthenticateToken, addUser);
+router.put("/:id", AuthenticateToken, updateUser);
+router.delete("/:id", AuthenticateToken, deleteUser);
 router.post("/login", loginUser);
-router.get("/protected-route", AuthenticateToken, (req, res) => {
-  res.json({ message: "This is a protected route" });
-});
 
 module.exports = router;

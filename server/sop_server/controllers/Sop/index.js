@@ -37,16 +37,6 @@ const getSopById = asyncHandler(async (req, res) => {
 // ! Add SOP
 const addSop = asyncHandler(async (req, res) => {
   try {
-
-    // Assuming you have a token or some identifier for the logged-in user
-    const loggedInUserId = req.headers['user-id']; // Replace with your actual header or token
-
-    // Make a request to the user_server to fetch user information
-    const userResponse = await axios.get(`http://localhost:4000/api/user/${loggedInUserId}`);
-
-    // Extract user information from the response
-    const loggedInUser = userResponse.data;
-
     const sop = await Sop.create(req.body);
     res.status(200).json(sop);
   } catch (error) {
