@@ -67,7 +67,6 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
   try {
-    console.log("%c Line:71 🍌 req.body", "color:#2eafb0", req.body);
     const { email, username, password } = req.body;
 
     if ((!email && !username) || !password) {
