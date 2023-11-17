@@ -11,10 +11,20 @@ import Settings from "./pages/Settings";
 import Notfound from "./pages/Notfound";
 import Login from "./pages/Login";
 import KnowledgebaseSOP from "./pages/KnowledgebaseSOP";
+import PrivateRoute from "./features/PrivateRoute";
+import CheckTokenValidity from "./features/CheckTokenValidity";
 
 const App = () => {
   const [sop, setSop] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("accessToken");
+    console.log("%c Line:23 🍰 localStorage", "color:#4fff4B", localStorage);
+    const isValidToken = CheckTokenValidity(storedToken);
+
+    setIsLoggedIn(isValidToken);
+  }, []);
 
   useEffect(() => {
     const fetchSopData = async () => {
@@ -26,10 +36,6 @@ const App = () => {
       fetchSopData();
     }
   }, [isLoggedIn]);
-
-  const PrivateRoute = ({ element }) => {
-    return isLoggedIn ? element : <Navigate to="/Login" />;
-  };
 
   return (
     <div>
@@ -69,7 +75,10 @@ const App = () => {
           path="/Settings"
           element={<PrivateRoute element={<Settings />} />}
         />
-        <Route path="*" element={<Notfound />} />
+        <Route
+          path="*"
+          element={isLoggedIn ? <Notfound /> : <Navigate to="/Login" />}
+        />
       </Routes>
     </div>
   );
