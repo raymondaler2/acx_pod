@@ -36,11 +36,11 @@ mongoose.set("strictQuery", false);
 mongoose
   .connect(MONGO_URL)
   .then(() => {
-    console.log(`Connected to userDB database`);
+    console.log(`Connected to userDB`);
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
   })
   .catch((error) => {
-    console.log(`userDB Database Error:`, error);
+    console.log(`userDB Error:`, error);
   });
