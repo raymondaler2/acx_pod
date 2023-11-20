@@ -1,6 +1,7 @@
 const error = require("../../middleware/Error");
 const Sop = require("../../models/Sop");
 const asyncHandler = require("express-async-handler");
+const jwt = require("jsonwebtoken");
 
 /* 
     FUNCTIONS:
@@ -36,13 +37,23 @@ const getSopById = asyncHandler(async (req, res) => {
 
 // ! Add SOP
 const addSop = asyncHandler(async (req, res) => {
-  try {
-    const sop = await Sop.create(req.body);
-    res.status(200).json(sop);
-  } catch (error) {
-    res.status(500);
-    throw new Error(`Add SOP ERROR: `, error);
-  }
+  const token = req?.headers?.authorization;
+  const secretKey = process.env.JWT_SECRET;
+
+  jwt.verify(token, secretKey, async (err, decoded) => {
+    if (err) {
+      console.error("Token verification failed:", err.message);
+    } else {
+      try {
+        req.body.user_id = decoded.userId;
+        const sop = await Sop.create(req.body);
+        res.status(200).json(sop);
+      } catch (error) {
+        res.status(500);
+        throw new Error(`Add SOP ERROR: `, error);
+      }
+    }
+  });
 });
 
 // ! Update SOP
