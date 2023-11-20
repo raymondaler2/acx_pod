@@ -17,11 +17,12 @@ import CheckTokenValidity from "./features/CheckTokenValidity";
 const App = () => {
   const [sop, setSop] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  console.log("%c Line:20 🥓 isLoggedIn", "color:#fca650", isLoggedIn);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("accessToken");
-    console.log("%c Line:23 🍰 localStorage", "color:#4fff4B", localStorage);
+    const storedToken = localStorage.getItem("token");
     const isValidToken = CheckTokenValidity(storedToken);
+    console.log("%c Line:26 🌮 isValidToken", "color:#f5ce50", isValidToken);
 
     setIsLoggedIn(isValidToken);
   }, []);
@@ -44,41 +45,56 @@ const App = () => {
         <Route path="/Login" element={<Login />} />
         <Route
           path="/Clients"
-          element={<PrivateRoute element={<Clients />} />}
+          element={
+            <PrivateRoute isLoggedIn={isLoggedIn} element={<Clients />} />
+          }
         />
         <Route
           path="/HelpAndSupport"
-          element={<PrivateRoute element={<HelpAndSupport />} />}
+          element={
+            <PrivateRoute
+              isLoggedIn={isLoggedIn}
+              element={<HelpAndSupport />}
+            />
+          }
         />
         <Route
           path="/Knowledgebase"
-          element={<PrivateRoute element={<Knowledgebase />} />}
+          element={
+            <PrivateRoute isLoggedIn={isLoggedIn} element={<Knowledgebase />} />
+          }
         />
-        {sop.map((data) => (
+        {sop?.map((data) => (
           <Route
             key={data._id}
             path={`/Knowledgebase/${data._id}`}
             element={
-              <PrivateRoute element={<KnowledgebaseSOP data={data} />} />
+              <PrivateRoute
+                isLoggedIn={isLoggedIn}
+                element={<KnowledgebaseSOP data={data} />}
+              />
             }
           />
         ))}
         <Route
           path="/Portfolio"
-          element={<PrivateRoute element={<Portfolio />} />}
+          element={
+            <PrivateRoute isLoggedIn={isLoggedIn} element={<Portfolio />} />
+          }
         />
         <Route
           path="/Reports"
-          element={<PrivateRoute element={<Reports />} />}
+          element={
+            <PrivateRoute isLoggedIn={isLoggedIn} element={<Reports />} />
+          }
         />
         <Route
           path="/Settings"
-          element={<PrivateRoute element={<Settings />} />}
+          element={
+            <PrivateRoute isLoggedIn={isLoggedIn} element={<Settings />} />
+          }
         />
-        <Route
-          path="*"
-          element={isLoggedIn ? <Notfound /> : <Navigate to="/Login" />}
-        />
+        <Route path="*" element={isLoggedIn ? <Notfound /> : <Notfound />} />
       </Routes>
     </div>
   );

@@ -1,17 +1,16 @@
-const CheckTokenValidity = (token) => {
-  const jwtSecret = import.meta.env.REACT_APP_JWT_SECRET;
+import { jwtDecode } from "jwt-decode";
 
+const CheckTokenValidity = (token) => {
   try {
-    const decodedToken = jwt.decode(token, { complete: true });
-    jwt.verify(token, jwtSecret);
+    const decodedToken = jwtDecode(token);
 
     if (decodedToken && decodedToken.exp * 1000 > Date.now()) {
-      return true; // Token is valid
+      return true;
     } else {
-      return false; // Token is expired
+      return false;
     }
   } catch (error) {
-    return false; // Token is invalid
+    return false;
   }
 };
 
