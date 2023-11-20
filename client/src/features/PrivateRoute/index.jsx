@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 
-const PrivateRoute = (isLoggedIn, { element }) => {
+const PrivateRoute = (props) => {
+  const { isLoggedIn, element } = props;
   return isLoggedIn ? element : <Navigate to="/Login" />;
 };
 

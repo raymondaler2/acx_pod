@@ -13,17 +13,21 @@ import Login from "./pages/Login";
 import KnowledgebaseSOP from "./pages/KnowledgebaseSOP";
 import PrivateRoute from "./features/PrivateRoute";
 import CheckTokenValidity from "./features/CheckTokenValidity";
+import { Grid, CircularProgress } from "@mui/material";
 
 const App = () => {
   const [sop, setSop] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const storedToken = localStorage.getItem("token");
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
     const isValidToken = CheckTokenValidity(storedToken);
-
-    setIsLoggedIn(isValidToken);
-  }, []);
+    setTimeout(async () => {
+      await setIsLoggedIn(isValidToken);
+      await setIsLoading(false);
+    }, 1000);
+  }, [storedToken]);
 
   useEffect(() => {
     const fetchSopData = async () => {
@@ -36,7 +40,20 @@ const App = () => {
     }
   }, [isLoggedIn]);
 
-  return (
+  return isLoading ? (
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      sx={{
+        minHeight: "90vh",
+      }}
+    >
+      <CircularProgress />
+    </Grid>
+  ) : (
     <div>
       <Routes>
         <Route index element={<Home />} />
