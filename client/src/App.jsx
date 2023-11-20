@@ -17,12 +17,10 @@ import CheckTokenValidity from "./features/CheckTokenValidity";
 const App = () => {
   const [sop, setSop] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  console.log("%c Line:20 🥓 isLoggedIn", "color:#fca650", isLoggedIn);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     const isValidToken = CheckTokenValidity(storedToken);
-    console.log("%c Line:26 🌮 isValidToken", "color:#f5ce50", isValidToken);
 
     setIsLoggedIn(isValidToken);
   }, []);
