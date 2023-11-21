@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// ! ADD FEATURED SOP IN SCHEMA
 const sopSchema = mongoose.Schema(
   {
     sop_title: {

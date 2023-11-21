@@ -2,6 +2,7 @@ const AuthenticateToken = require("./../../../middleware/AuthenticateToken/index
 const express = require("express");
 
 const {
+  getAllSopIDs,
   getAllSop,
   getSopById,
   addSop,
@@ -12,6 +13,7 @@ const {
 const router = express.Router();
 
 // * SOP calls
+router.get("/id/", AuthenticateToken, getAllSopIDs);
 router.get("/", AuthenticateToken, getAllSop);
 router.get("/:id", AuthenticateToken, getSopById);
 router.post("/", AuthenticateToken, addSop);

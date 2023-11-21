@@ -5,12 +5,24 @@ const jwt = require("jsonwebtoken");
 
 /* 
     FUNCTIONS:
+    - Get All SOP IDs
     - Get All SOP
     - Get SOP by Id
     - Add SOP
     - Update SOP
     - Delete SOP
 */
+
+// ! Get All SOP IDs
+const getAllSopIDs = asyncHandler(async (req, res) => {
+  try {
+    const sops = await Sop.find({}, { _id: 1 });
+    res.status(200).json(sops);
+  } catch (error) {
+    res.status(500);
+    throw new Error(`Get All SOP IDs ERROR: `, error);
+  }
+});
 
 // ! Get All SOP
 const getAllSop = asyncHandler(async (req, res) => {
@@ -90,6 +102,7 @@ const deleteSop = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
+  getAllSopIDs,
   getAllSop,
   getSopById,
   addSop,
