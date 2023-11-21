@@ -4,7 +4,8 @@ import ButtonBase from "@mui/material/ButtonBase";
 import { Link } from "react-router-dom";
 
 const SopCard = (props) => {
-  const { sop } = props;
+  const { sop, user, comment_count } = props;
+  console.log("%c Line:8 🍤 sop", "color:#4fff4B", sop);
   const { _id } = sop;
 
   return (
