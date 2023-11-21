@@ -1,6 +1,6 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
-import FetchAllSop from "./features/FetchAllSop";
+import FetchAllSopIDs from "./features/FetchAllSopIDs/index.jsx";
 import Home from "./pages/Home";
 import Clients from "./pages/Clients";
 import HelpAndSupport from "./pages/HelpAndSupport";
@@ -16,7 +16,7 @@ import CheckTokenValidity from "./features/CheckTokenValidity";
 import { Grid, CircularProgress } from "@mui/material";
 
 const App = () => {
-  const [sop, setSop] = useState([]);
+  const [sopIDs, setSopIDs] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const storedToken = localStorage.getItem("token");
@@ -30,13 +30,13 @@ const App = () => {
   }, [storedToken]);
 
   useEffect(() => {
-    const fetchSopData = async () => {
-      const response = await FetchAllSop();
-      setSop(response);
+    const fetchSopIDs = async () => {
+      const response = await FetchAllSopIDs();
+      setSopIDs(response);
     };
 
     if (isLoggedIn) {
-      fetchSopData();
+      fetchSopIDs();
     }
   }, [isLoggedIn]);
 
@@ -79,14 +79,14 @@ const App = () => {
             <PrivateRoute isLoggedIn={isLoggedIn} element={<Knowledgebase />} />
           }
         />
-        {sop?.map((data) => (
+        {sopIDs?.map((data) => (
           <Route
             key={data._id}
             path={`/Knowledgebase/${data._id}`}
             element={
               <PrivateRoute
                 isLoggedIn={isLoggedIn}
-                element={<KnowledgebaseSOP data={data} />}
+                element={<KnowledgebaseSOP id={data._id} />}
               />
             }
           />
@@ -109,7 +109,7 @@ const App = () => {
             <PrivateRoute isLoggedIn={isLoggedIn} element={<Settings />} />
           }
         />
-        <Route path="*" element={isLoggedIn ? <Notfound /> : <Notfound />} />
+        <Route path="*" element={<Notfound />} />
       </Routes>
     </div>
   );

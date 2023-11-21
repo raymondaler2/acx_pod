@@ -75,7 +75,7 @@ const SopCardBig = (props) => {
                   marginTop: "20px",
                 }}
               >
-                {milestones.map((data) => {
+                {milestones?.map((data) => {
                   return <MilestoneDetails data={data} />;
                 })}
               </Box>
