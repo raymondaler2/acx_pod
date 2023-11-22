@@ -14,11 +14,28 @@ const FetchAllSop = async () => {
     const sopDataWithUser = await Promise.all(
       sop.data.map(async (sop) => {
         const userToAdd = await FetchUserByID(sop.user_id);
-        return {
+
+        const countCommentsAndReplies = (comment) => {
+          const replyCount = comment.replies ? comment.replies.length : 0;
+          return 1 + replyCount;
+        };
+
+        const commentCount = sop.comments.reduce(
+          (total, comment) => total + countCommentsAndReplies(comment),
+          0
+        );
+
+        const sopWithReplies = {
           ...sop,
           user: userToAdd,
-          comment_count: sop.comments.length,
+          comment_count: commentCount,
+          comments: sop.comments.map((comment) => ({
+            ...comment,
+            reply_count: comment.replies ? comment.replies.length : 0,
+          })),
         };
+
+        return sopWithReplies;
       })
     );
 
