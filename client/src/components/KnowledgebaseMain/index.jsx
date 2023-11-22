@@ -7,7 +7,7 @@ const KnowledgebaseMain = () => {
       sx={{
         mt: "50px",
         overflowY: "scroll",
-        maxHeight: "45rem",
+        minHeight: "47rem",
         paddingLeft: "20px",
       }}
     >

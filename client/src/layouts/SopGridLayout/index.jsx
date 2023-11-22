@@ -14,10 +14,23 @@ const SopGridLayout = () => {
       alignItems="center"
       justifyContent="center"
       sx={{
-        minHeight: "90vh",
+        minHeight: "50vh",
       }}
     >
       <CircularProgress />
+    </Grid>
+  ) : sop.length === 0 ? (
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      sx={{ minHeight: "50vh" }}
+    >
+      <Grid item xs={3}>
+        <h1 className="text-center">No Results</h1>
+      </Grid>
     </Grid>
   ) : (
     <Grid container rowSpacing={3} columnSpacing={0}>
