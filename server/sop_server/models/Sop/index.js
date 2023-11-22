@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 // ! ADD FEATURED SOP IN SCHEMA
 const sopSchema = mongoose.Schema(
   {
+    featured: {
+      type: Boolean,
+      default: false,
+    },
     sop_title: {
       type: String,
       required: [true, "Please enter an SOP Title"],

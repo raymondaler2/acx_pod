@@ -3,10 +3,11 @@ import { Str } from "@supercharge/strings";
 import ButtonBase from "@mui/material/ButtonBase";
 import { Link } from "react-router-dom";
 import ChatBubbleOutlinedIcon from "@mui/icons-material/ChatBubbleOutlined";
+import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
+import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 
 const SopCard = (props) => {
-  const { sop, user, comment_count } = props;
-  const { _id } = sop;
+  const { sop } = props;
   const dateObject = new Date(sop?.createdAt);
   const options = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = new Intl.DateTimeFormat("en-US", options).format(
@@ -16,7 +17,7 @@ const SopCard = (props) => {
   return (
     <Grid item xs={2.4}>
       <ButtonBase>
-        <Link to={`/Knowledgebase/${_id}`}>
+        <Link to={`/Knowledgebase/${sop?._id}`}>
           <Card
             sx={{
               height: "350px",
@@ -35,11 +36,23 @@ const SopCard = (props) => {
             <Box
               sx={{
                 height: "60px",
+                display: "flex",
+                alignItems: "center",
+                width: "fit-content",
               }}
             >
               <h1 className="text-left text-[16px] font-bold">
                 {Str(sop?.sop_title).limit(35, " ...").get()}
               </h1>
+              {sop?.featured ? (
+                <StarOutlinedIcon
+                  sx={{
+                    color: "#FAC710",
+                  }}
+                />
+              ) : (
+                <StarBorderOutlinedIcon />
+              )}
             </Box>
             <Box
               sx={{
@@ -91,7 +104,11 @@ const SopCard = (props) => {
               >
                 <Grid container alignItems="center" justifyContent="flex-end">
                   <ChatBubbleOutlinedIcon
-                    sx={{ fontSize: "9px", marginRight: "5px" }}
+                    sx={{
+                      fontSize: "9px",
+                      marginRight: "5px",
+                      color: "#B3B3B3",
+                    }}
                   />
                   <p className="text-[9px]">{sop?.comment_count}</p>
                 </Grid>
