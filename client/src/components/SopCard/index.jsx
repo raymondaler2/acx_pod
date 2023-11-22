@@ -1,12 +1,17 @@
-import { Box, Grid, Card } from "@mui/material";
+import { Box, Grid, Card, Divider } from "@mui/material";
 import { Str } from "@supercharge/strings";
 import ButtonBase from "@mui/material/ButtonBase";
 import { Link } from "react-router-dom";
+import ChatBubbleOutlinedIcon from "@mui/icons-material/ChatBubbleOutlined";
 
 const SopCard = (props) => {
   const { sop, user, comment_count } = props;
-  console.log("%c Line:8 🍤 sop", "color:#4fff4B", sop);
   const { _id } = sop;
+  const dateObject = new Date(sop?.createdAt);
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const formattedDate = new Intl.DateTimeFormat("en-US", options).format(
+    dateObject
+  );
 
   return (
     <Grid item xs={2.4}>
@@ -24,6 +29,7 @@ const SopCard = (props) => {
                 boxShadow: 20,
                 cursor: "pointer",
               },
+              flexDirection: "column",
             }}
           >
             <Box
@@ -56,13 +62,41 @@ const SopCard = (props) => {
             </Box>
             <Box
               sx={{
-                height: "100px",
+                height: "165px",
               }}
             >
               <p className="text-left text-[14px]">
                 {Str(sop?.sop_description).limit(180, " ...").get()}
               </p>
             </Box>
+            <Grid container>
+              <Grid item xs={9} sx={{ marginTop: "auto" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    width: "fit-content",
+                  }}
+                >
+                  <p className="text-[9px] mr-2">{`${sop?.user?.first_name} ${sop?.user?.last_name}`}</p>
+                  <Divider orientation="vertical" variant="middle" flexItem />
+                  <p className="text-[9px]">|</p>
+                  <p className="text-[9px] ml-2">{formattedDate}</p>
+                </Box>
+              </Grid>
+              <Grid
+                item
+                xs={3}
+                sx={{ textAlign: "right", justifyContentL: "Right" }}
+              >
+                <Grid container alignItems="center" justifyContent="flex-end">
+                  <ChatBubbleOutlinedIcon
+                    sx={{ fontSize: "9px", marginRight: "5px" }}
+                  />
+                  <p className="text-[9px]">{sop?.comment_count}</p>
+                </Grid>
+              </Grid>
+            </Grid>
           </Card>
         </Link>
       </ButtonBase>

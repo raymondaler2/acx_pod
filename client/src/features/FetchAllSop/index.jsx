@@ -16,7 +16,7 @@ const FetchAllSop = async () => {
         const userToAdd = await FetchUserByID(sop.user_id);
         return {
           ...sop,
-          user: userToAdd.username,
+          user: userToAdd,
           comment_count: sop.comments.length,
         };
       })
