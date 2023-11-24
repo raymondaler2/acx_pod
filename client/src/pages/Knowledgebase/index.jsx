@@ -7,21 +7,16 @@ const Knowledgebase = () => {
   const [sop, setSop] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await FetchAllSop();
-      setSop(response);
-    };
-    fetchData();
-  }, []);
+  const fetchData = async () => {
+    const response = await FetchAllSop();
+    setSop(response);
+  };
 
   useEffect(() => {
-    if (!!sop) {
-      setTimeout(async () => {
-        await setIsLoading(false);
-      }, 1000);
-    }
-  }, [sop]);
+    fetchData().then(async () => {
+      await setIsLoading(false);
+    });
+  }, []);
 
   return (
     <knowledgebaseContext.Provider value={{ isLoading, sop }}>

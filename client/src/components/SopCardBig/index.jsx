@@ -38,10 +38,6 @@ const SopCardBig = (props) => {
           <PerfectScrollbar
             style={{
               maxHeight: "82vh",
-              // marginRight: "30px",
-              // marginTop: "20px",
-              // marginBottom: "20px",
-              padding: "0px",
             }}
           >
             <Grid

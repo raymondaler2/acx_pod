@@ -9,21 +9,18 @@ const KnowledgebaseSOP = (props) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(async () => {
-      await setIsLoading(false);
-    }, 1000);
-  }, []);
+  const fetchSopData = async () => {
+    const response = await FetchSopByID(id);
+    setData(response);
+  };
 
   useEffect(() => {
-    const fetchSopData = async () => {
-      const response = await FetchSopByID(id);
-      setData(response);
-    };
-    if (!isLoading) {
-      fetchSopData();
-    }
-  }, [isLoading]);
+    fetchSopData().then(() => {
+      setTimeout(async () => {
+        await setIsLoading(false);
+      }, 1000);
+    });
+  }, []);
 
   return isLoading ? (
     <Grid

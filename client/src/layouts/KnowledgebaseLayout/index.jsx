@@ -12,7 +12,7 @@ const Knowledgebase = () => {
         <Navigation />
       </Grid>
       <Grid item xs={10.1}>
-        <div className="mt-[50px]">
+        <div className="mt-[50px] mb-[30px]">
           <Grid container spacing={2}>
             <Grid item xs={1.5}>
               <CreateFilterButton />
