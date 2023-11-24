@@ -1,4 +1,4 @@
-import { Grid, CircularProgress, Divider, Box } from "@mui/material";
+import { Grid, CircularProgress, Divider } from "@mui/material";
 import { useContext } from "react";
 import knowledgebaseContext from "./../../context/knowledgebaseContext";
 import SopCard from "./../../components/SopCard";
@@ -33,7 +33,7 @@ const SopGridLayout = () => {
       </Grid>
     </Grid>
   ) : (
-    <Grid container rowSpacing={3} columnSpacing={0}>
+    <Grid container rowSpacing={3} columnSpacing={0} sx={{ maxHeight: "50vh" }}>
       {sop.map((sop) => {
         if (sop.featured) {
           return <SopCard sop={sop} />;
