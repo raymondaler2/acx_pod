@@ -41,7 +41,7 @@ const KnowledgebaseSOP = (props) => {
         <SopCardBig data={data} />
       </Grid>
       <Grid item xs={4}>
-        <SopCommentsActLog />
+        <SopCommentsActLog data={data} />
       </Grid>
     </Grid>
   );
